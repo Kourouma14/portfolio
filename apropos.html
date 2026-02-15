@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos - Portfolio Kourouma Abdoulaye</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">KOUROUMA <span class="highlight">ABDOULAYE</span></div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
+                <li><a href="apropos.html" class="nav-link active">À propos</a></li>
+                <li><a href="projets.html" class="nav-link">Projets</a></li>
+                <li><a href="competences.html" class="nav-link">Compétences</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <link rel="stylesheet" href="assets/css/apropos.css">
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Ouvrir le menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- En-tête de page -->
+    <header class="page-header">
+        <div class="container">
+            <h1>À propos de moi</h1>
+            <p>Découvrez mon parcours, mes passions et ce qui me motive</p>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="page-content">
+        <div class="container">
+            <!-- Section présentation -->
+            <section class="about-container">
+                <div class="about-text">
+                    <h2>Qui suis-je ?</h2>
+                    <p>Je suis <span class="highlight">Kourouma Abdoulaye</span>, un développeur Full-Stack et Mobile spécialisé dans la conception et la réalisation d'applications complexes. Mon expertise se concentre sur la création d'écosystèmes complets, alliant des back-ends robustes avec <span class="highlight">Laravel</span> et des applications mobiles natives performantes avec <span class="highlight">Flutter</span>.</p>
+                    
+                    <p>Ce qui a commencé comme une curiosité pour le web est devenu une passion pour l'architecture logicielle. J'aime relever le défi de construire des plateformes multi-services comme des applications de VTC, de e-commerce ou des systèmes de gestion intégrés.</p>
+                    
+                    <p>Mon objectif en tant que freelance est d'apporter une réelle valeur technique à mes clients, en traduisant leurs besoins métier en solutions fiables, évolutives et maintenables. Je gère des projets de A à Z, de la base de données à l'application mobile finale.</p>
+                    
+                    <button class="cv-btn" onclick="downloadCV()">Télécharger mon CV</button>
+                </div>
+                <div class="about-image">
+                    <img src="assets/images/5.jpg" alt="Photo de profil" class="profile-img">
+                </div>
+            </section>
+
+            <!-- Section formation et expérience -->
+            <section class="experience-section">
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <h3>🎓 Formation</h3>
+                        <h4>Ingénierie Logicielle</h4>
+                        <p>Solide formation en développement logiciel, complétée par une spécialisation avancée sur les frameworks PHP et Dart.</p>
+                        <ul>
+                            <li>Architecture MVC et APIs RESTful (Laravel)</li>
+                            <li>Développement mobile cross-platform (Flutter)</li>
+                            <li>Gestion de bases de données relationnelles (MySQL)</li>
+                            <li>Déploiement et maintenance d'applications</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="experience-card">
+                        <h3>💼 Expérience Freelance & Projets</h3>
+                        <h4>Architecte de solutions complètes</h4>
+                        <p>Conception et développement de plusieurs applications d'envergure pour des clients et à titre personnel.</p>
+                        <ul>
+                            <li>Super-App (E-commerce, VTC, etc.)</li>
+                            <li>Systèmes de gestion (SaaS) pour l'hôtellerie</li>
+                            <li>Plateformes de covoiturage</li>
+                            <li>Applications de gestion scolaire</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section passions -->
+            <section class="passions-section">
+                <h2 class="text-center">Mes Passions</h2>
+                <div class="passions-grid">
+                    <div class="passion-card">
+                        <div class="passion-icon">💻</div>
+                        <h3>Développement Web</h3>
+                        <p>J'adore créer des applications web qui résolvent de vrais problèmes et offrent une expérience utilisateur exceptionnelle.</p>
+                    </div>
+                    
+                    <div class="passion-card">
+                        <div class="passion-icon">🎨</div>
+                        <h3>Design UI/UX</h3>
+                        <p>La création d'interfaces intuitives et esthétiques est un aspect du développement qui me passionne particulièrement.</p>
+                    </div>
+                    
+                    <div class="passion-card">
+                        <div class="passion-icon">🚀</div>
+                        <h3>Innovation</h3>
+                        <p>J'aime explorer les nouvelles technologies et trouver des solutions créatives aux défis techniques.</p>
+                    </div>
+                    
+                    <div class="passion-card">
+                        <div class="passion-icon">📚</div>
+                        <h3>Apprentissage</h3>
+                        <p>Le domaine du développement web évolue constamment, ce qui me motive à apprendre continuellement.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section valeurs -->
+            <section class="values-section">
+                <h2 class="text-center">Mes Valeurs</h2>
+                <div class="values-content">
+                    <div class="value-item">
+                        <h3>🎯 Qualité</h3>
+                        <p>Je m'efforce toujours de livrer un code propre, maintenable et performant.</p>
+                    </div>
+                    <div class="value-item">
+                        <h3>🤝 Collaboration</h3>
+                        <p>Le travail en équipe et le partage de connaissances sont essentiels à mon approche.</p>
+                    </div>
+                    <div class="value-item">
+                        <h3>🔄 Amélioration Continue</h3>
+                        <p>J'apprends de chaque projet et cherche constamment à améliorer mes compétences.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div>Designed by Abdoulaye with HTML CSS JS</div>
+            <div>Tous droits réservés - 2025</div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="assets/js/apropos.js"></script>
+   
+</body>
+</html>

@@ -1,0 +1,138 @@
+
+        /* Styles spécifiques à la page À propos */
+        .experience-section {
+            margin: 4rem 0;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .experience-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .experience-card h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card h4 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .experience-card ul {
+            margin-top: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .experience-card li {
+            margin-bottom: 0.5rem;
+            color: var(--light-text);
+        }
+
+        .passions-section {
+            margin: 4rem 0;
+            padding: 4rem 0;
+            background: var(--light-bg);
+            border-radius: 20px;
+        }
+
+        .passions-section h2 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .passions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .passion-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .passion-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .passion-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .passion-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .passion-card p {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .values-section {
+            margin: 4rem 0;
+        }
+
+        .values-section h2 {
+            color: var(--secondary-color);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .values-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .value-item h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .value-item p {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .passions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .values-content {
+                grid-template-columns: 1fr;
+            }
+        }
+  
