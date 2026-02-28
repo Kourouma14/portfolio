@@ -1,5 +1,5 @@
 // ==================== EMAILJS INIT ====================
-emailjs.init('_07st9SINXWvFEeqX-l4A');
+emailjs.init('rq8JLJjtRonZEX5zG');
 
 // ==================== FORMULAIRE ====================
 const contactForm = document.getElementById('contactForm');
