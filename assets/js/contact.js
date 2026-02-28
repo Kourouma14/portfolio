@@ -1,4 +1,7 @@
-// Validation et soumission du formulaire
+// ==================== EMAILJS INIT ====================
+emailjs.init('_07st9SINXWvFEeqX-l4A');
+
+// ==================== FORMULAIRE ====================
 const contactForm = document.getElementById('contactForm');
 const messageContainer = document.getElementById('messageContainer');
 const charCounter = document.getElementById('charCounter');
@@ -31,7 +34,7 @@ function showMessage(text, type) {
     setTimeout(() => {
         message.style.opacity = '0';
         setTimeout(() => message.remove(), 300);
-    }, 5000);
+    }, 6000);
 }
 
 // Validation du formulaire
@@ -61,34 +64,50 @@ contactForm.addEventListener('submit', async (e) => {
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoading = submitBtn.querySelector('.btn-loading');
 
+    const formData = {
+        prenom:    document.getElementById('prenom').value,
+        nom:       document.getElementById('nom').value,
+        email:     document.getElementById('email').value,
+        telephone: document.getElementById('telephone').value || 'Non renseigné',
+        sujet:     document.getElementById('sujet').value,
+        message:   document.getElementById('message').value
+    };
+
+    // Validation
+    const errors = validateForm(formData);
+    if (errors.length > 0) {
+        showMessage(errors.join(' — '), 'error');
+        return;
+    }
+
+    // Animation de chargement
     submitBtn.disabled = true;
     btnText.style.display = 'none';
     btnLoading.style.display = 'inline';
 
-    const formData = {
-        prenom: document.getElementById('prenom').value,
-        nom: document.getElementById('nom').value,
-        email: document.getElementById('email').value,
-        telephone: document.getElementById('telephone').value,
-        sujet: document.getElementById('sujet').value,
-        message: document.getElementById('message').value,
-        newsletter: document.getElementById('newsletter').checked
-    };
+    try {
+        await emailjs.send('service_bz2jh0g', 'template_by6cvnb', {
+            prenom:    formData.prenom,
+            nom:       formData.nom,
+            email:     formData.email,
+            telephone: formData.telephone,
+            sujet:     formData.sujet,
+            message:   formData.message
+        });
 
-    const errors = validateForm(formData);
+        showMessage('Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.', 'success');
+        contactForm.reset();
+        charCounter.textContent = '0/500 caractères';
 
-    setTimeout(() => {
-        if (errors.length > 0) {
-            showMessage(errors.join(' — '), 'error');
-        } else {
-            showMessage('Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.', 'success');
-            contactForm.reset();
-            charCounter.textContent = '0/500 caractères';
-        }
-        submitBtn.disabled = false;
-        btnText.style.display = 'inline';
-        btnLoading.style.display = 'none';
-    }, 1500);
+    } catch (error) {
+        console.error('EmailJS error:', error);
+        showMessage('Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement par email.', 'error');
+    }
+
+    // Remettre le bouton normal
+    submitBtn.disabled = false;
+    btnText.style.display = 'inline';
+    btnLoading.style.display = 'none';
 });
 
 // ==================== FONCTIONS UTILITAIRES ====================
@@ -115,14 +134,12 @@ function toggleFAQ(element) {
     const answer = faqItem.querySelector('.faq-answer');
     const isOpen = faqItem.classList.contains('active');
 
-    // Fermer toutes les autres
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
         item.querySelector('.faq-answer').style.maxHeight = '0';
         item.querySelector('.faq-icon').textContent = '+';
     });
 
-    // Ouvrir/fermer celle cliquée
     if (!isOpen) {
         faqItem.classList.add('active');
         answer.style.maxHeight = answer.scrollHeight + 'px';
