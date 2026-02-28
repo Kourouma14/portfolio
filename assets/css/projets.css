@@ -83,8 +83,8 @@
 .project-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;       /* remplit le cadre sans déformer */
-    object-position: top;    /* montre la partie haute de l'image */
+    object-fit: contain;     /* image entière visible sans recadrage */
+    object-position: center;
     display: block;
     transition: transform 0.4s ease;
 }
@@ -117,7 +117,7 @@
     line-height: 1.55;
     margin: 0;
     display: -webkit-box;
-    /* -webkit-line-clamp: 3; */
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
