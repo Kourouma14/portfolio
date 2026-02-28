@@ -100,7 +100,9 @@ contactForm.addEventListener('submit', async (e) => {
         charCounter.textContent = '0/500 caractères';
 
     } catch (error) {
-        console.error('EmailJS error:', error);
+        console.error('EmailJS error complet:', error);
+        console.error('Status:', error.status);
+        console.error('Text:', error.text);
         showMessage('Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement par email.', 'error');
     }
 
