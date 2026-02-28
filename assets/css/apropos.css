@@ -1,138 +1,257 @@
+/* ==================== PAGE À PROPOS ==================== */
 
-        /* Styles spécifiques à la page À propos */
-        .experience-section {
-            margin: 4rem 0;
-        }
+/* Titre de section commun */
+.section-title {
+    font-size: 2rem;
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid var(--primary-color);
+    display: inline-block;
+}
 
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
+/* ==================== TIMELINE EXPÉRIENCE ==================== */
 
-        .experience-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary-color);
-        }
+.experience-section,
+.formation-section {
+    margin: 4rem 0;
+}
 
-        .experience-card h3 {
-            color: var(--primary-color);
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-        }
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin-top: 2rem;
+}
 
-        .experience-card h4 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-        }
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+    border-radius: 3px;
+}
 
-        .experience-card ul {
-            margin-top: 1rem;
-            padding-left: 1.5rem;
-        }
+.timeline-item {
+    position: relative;
+    padding: 0 0 2.5rem 2rem;
+}
 
-        .experience-card li {
-            margin-bottom: 0.5rem;
-            color: var(--light-text);
-        }
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.45rem;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
 
-        .passions-section {
-            margin: 4rem 0;
-            padding: 4rem 0;
-            background: var(--light-bg);
-            border-radius: 20px;
-        }
+.timeline-date {
+    display: inline-block;
+    background: rgba(29, 209, 161, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(29, 209, 161, 0.3);
+    padding: 4px 14px;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
 
-        .passions-section h2 {
-            color: var(--secondary-color);
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
+.timeline-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color);
+}
 
-        .passions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
+.timeline-content h3 {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
 
-        .passion-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
+.timeline-content h4 {
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
 
-        .passion-card:hover {
-            transform: translateY(-10px);
-        }
+.timeline-content ul {
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+}
 
-        .passion-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+.timeline-content li {
+    color: var(--light-text);
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
+}
 
-        .passion-card h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-        }
+/* ==================== GRILLE FORMATION ==================== */
 
-        .passion-card p {
-            color: var(--light-text);
-            line-height: 1.6;
-        }
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
 
-        .values-section {
-            margin: 4rem 0;
-        }
+.experience-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color);
+}
 
-        .values-section h2 {
-            color: var(--secondary-color);
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
+.experience-card h3 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
 
-        .values-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+.experience-card h4 {
+    color: var(--light-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
 
-        .value-item {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary-color);
-        }
+.experience-card p {
+    color: var(--light-text);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin-bottom: 0.4rem;
+}
 
-        .value-item h3 {
-            color: var(--secondary-color);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-        }
+/* ==================== PASSIONS ==================== */
 
-        .value-item p {
-            color: var(--light-text);
-            line-height: 1.6;
-        }
+.passions-section {
+    margin: 4rem 0;
+    padding: 4rem 2rem;
+    background: var(--light-bg);
+    border-radius: 20px;
+}
 
-        @media (max-width: 768px) {
-            .experience-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .passions-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .values-content {
-                grid-template-columns: 1fr;
-            }
-        }
-  
+.passions-section h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.passions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.passion-card {
+    background: white;
+    padding: 1.75rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.passion-card:hover {
+    transform: translateY(-8px);
+}
+
+.passion-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.passion-card h3 {
+    color: var(--secondary-color);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.passion-card p {
+    color: var(--light-text);
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+/* ==================== VALEURS ==================== */
+
+.values-section {
+    margin: 4rem 0;
+}
+
+.values-section h2 {
+    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.values-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.value-item {
+    background: white;
+    padding: 1.75rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--primary-color);
+}
+
+.value-item h3 {
+    color: var(--secondary-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.value-item p {
+    color: var(--light-text);
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+    .timeline {
+        padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+        left: -1.95rem;
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .passions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .values-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .passions-grid {
+        grid-template-columns: 1fr;
+    }
+}
