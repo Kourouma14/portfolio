@@ -38,6 +38,7 @@
     <!-- Contenu principal -->
     <main class="page-content">
         <div class="container">
+
             <!-- Section informations de contact -->
             <section class="contact-info-section">
                 <div class="contact-cards">
@@ -45,27 +46,27 @@
                         <div class="contact-icon">📧</div>
                         <h3>Email</h3>
                         <p>abdulkourouma25@gmail.com</p>
-                        <button class="contact-btn" onclick="copyToClipboard('abdulkourouma25@gmamil.com')">Copier</button>
+                        <button class="contact-btn" onclick="copyToClipboard('abdulkourouma25@gmail.com')">Copier</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">📱</div>
                         <h3>Téléphone</h3>
-                        <p>+224 628718371</p>
-                        <button class="contact-btn" onclick="copyToClipboard('+224 628718371')">Copier</button>
+                        <p>+224 628 71 83 71<br>+224 666 48 14 18</p>
+                        <button class="contact-btn" onclick="copyToClipboard('+224 628 71 83 71')">Copier</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">📍</div>
                         <h3>Localisation</h3>
-                        <p>Conakry, Guinée</p>
+                        <p>Dabompa / Matoto<br>Conakry, Guinée</p>
                         <button class="contact-btn" onclick="openMaps()">Voir sur la carte</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">💼</div>
                         <h3>LinkedIn</h3>
-                        <p>www.linkedin.com/in/abdoulaye-kourouma-32b1761a3</p>
+                        <p>Abdoulaye Kourouma</p>
                         <button class="contact-btn" onclick="openLinkedIn()">Visiter</button>
                     </div>
                 </div>
@@ -81,7 +82,7 @@
 
                     <form class="contact-form" id="contactForm">
                         <div id="messageContainer"></div>
-                        
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="prenom">Prénom *</label>
@@ -110,7 +111,8 @@
                                 <option value="">Choisissez un sujet</option>
                                 <option value="collaboration">Proposition de collaboration</option>
                                 <option value="emploi">Opportunité d'emploi</option>
-                                <option value="projet">Projet personnel</option>
+                                <option value="projet">Projet freelance</option>
+                                <option value="support">Support technique / IT</option>
                                 <option value="autre">Autre</option>
                             </select>
                         </div>
@@ -152,24 +154,31 @@
                                 <p>Je m'efforce de répondre à tous les messages dans un délai de 24 à 48 heures maximum.</p>
                             </div>
                         </div>
-
                         <div class="faq-item">
                             <div class="faq-question" onclick="toggleFAQ(this)">
                                 <span>Quels types de projets acceptez-vous ?</span>
                                 <span class="faq-icon">+</span>
                             </div>
                             <div class="faq-answer">
-                                <p>Je suis ouvert à tous types de projets web : sites vitrines, applications interactives, landing pages, etc.</p>
+                                <p>Applications web & mobiles (Laravel, Flutter, React), sites vitrines, systèmes de gestion, support IT, et bien plus.</p>
                             </div>
                         </div>
-
                         <div class="faq-item">
                             <div class="faq-question" onclick="toggleFAQ(this)">
                                 <span>Travaillez-vous en freelance ?</span>
                                 <span class="faq-icon">+</span>
                             </div>
                             <div class="faq-answer">
-                                <p>Je peux effectuer des projets en freelance selon ma disponibilité et la complexité du projet.</p>
+                                <p>Oui, je prends des projets en freelance selon ma disponibilité. N'hésitez pas à me contacter pour discuter de votre besoin.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFAQ(this)">
+                                <span>Êtes-vous disponible pour du remote ?</span>
+                                <span class="faq-icon">+</span>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Oui, je suis ouvert aux opportunités à distance (remote) comme sur site à Conakry ou en Guinée.</p>
                             </div>
                         </div>
                     </div>
@@ -178,23 +187,23 @@
 
             <!-- Section réseaux sociaux -->
             <section class="social-section">
-                <h2>Suivez-moi</h2>
+                <h2>Retrouvez-moi sur</h2>
                 <div class="social-links">
-                    <a href="#" class="social-link github" onclick="openGitHub()">
+                    <a href="https://github.com/Kourouma14" target="_blank" class="social-link github">
                         <div class="social-icon">📂</div>
                         <span>GitHub</span>
                     </a>
-                    <a href="www.linkedin.com/in/abdoulaye-kourouma-32b1761a3" class="social-link linkedin" onclick="openLinkedIn()">
+                    <a href="https://www.linkedin.com/in/abdoulaye-kourouma-32b1761a3" target="_blank" class="social-link linkedin">
                         <div class="social-icon">💼</div>
                         <span>LinkedIn</span>
                     </a>
-                    <a href="#" class="social-link twitter" onclick="openTwitter()">
-                        <div class="social-icon">🐦</div>
-                        <span>Twitter</span>
+                    <a href="mailto:abdulkourouma25@gmail.com" class="social-link email">
+                        <div class="social-icon">✉️</div>
+                        <span>Email</span>
                     </a>
-                    <a href="#" class="social-link instagram" onclick="openInstagram()">
-                        <div class="social-icon">📷</div>
-                        <span>Instagram</span>
+                    <a href="tel:+224628718371" class="social-link phone">
+                        <div class="social-icon">📞</div>
+                        <span>Appeler</span>
                     </a>
                 </div>
             </section>
@@ -206,7 +215,7 @@
                         <div class="status-indicator available"></div>
                         <span class="status-text">Disponible pour de nouveaux projets</span>
                     </div>
-                    <p>Je suis actuellement à la recherche de nouvelles opportunités professionnelles et ouvert aux collaborations intéressantes.</p>
+                    <p>Je suis ouvert aux collaborations freelance, aux opportunités en CDI et aux projets techniques stimulants.</p>
                     <div class="availability-details">
                         <div class="detail-item">
                             <strong>Type :</strong> Freelance, CDI
@@ -220,6 +229,7 @@
                     </div>
                 </div>
             </section>
+
         </div>
     </main>
 
@@ -227,12 +237,11 @@
     <footer class="footer">
         <div class="footer-content">
             <div>Designed by Abdoulaye with HTML CSS JS</div>
-            <div>Tous droits réservés - 2025</div>
+            <div>Tous droits réservés - 2026</div>
         </div>
     </footer>
 
     <script src="script.js"></script>
     <script src="assets/js/contact.js"></script>
-  
 </body>
 </html>
