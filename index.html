@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Portfolio Kourouma Abdoulaye</title>
+    <title>Projets - Portfolio Kourouma Abdoulaye</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/projets.css">
 </head>
 <body>
     <!-- Navigation -->
@@ -12,9 +13,9 @@
         <div class="nav-container">
             <div class="logo">KOUROUMA <span class="highlight">ABDOULAYE</span></div>
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link active">Accueil</a></li>
+                <li><a href="index.html" class="nav-link">Accueil</a></li>
                 <li><a href="apropos.html" class="nav-link">À propos</a></li>
-                <li><a href="projets.html" class="nav-link">Projets</a></li>
+                <li><a href="projets.html" class="nav-link active">Projets</a></li>
                 <li><a href="competences.html" class="nav-link">Compétences</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
@@ -26,87 +27,232 @@
         </div>
     </nav>
 
-    <!-- Section Hero -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <p class="hero-label">Aide Ingénieur Télécoms &amp; Technicien Support N2</p>
-                <h1>Je suis <span class="highlight">Abdoulaye Kourouma</span>,<br>
-                Développeur Full-Stack &amp; Mobile</h1>
-                <p>Spécialisé dans les écosystèmes web et mobiles avec Laravel et Flutter, je construis des solutions sur mesure pour les entreprises et les startups. Fort de plus de 3 ans d'expérience en support IT et développement web.</p>
-                <div class="hero-actions">
-                    <a href="projets.html" class="hero-btn">Voir mes projets</a>
-                    <a href="contact.html" class="hero-btn secondary">Me contacter</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <svg class="hero-illustration" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="50" y="100" width="400" height="250" rx="10" fill="#2c2c2c"/>
-                    <rect x="70" y="120" width="150" height="100" rx="5" fill="#1dd1a1"/>
-                    <rect x="240" y="120" width="150" height="100" rx="5" fill="#3498db"/>
-                    <rect x="70" y="240" width="320" height="20" rx="10" fill="#1dd1a1"/>
-                    <rect x="70" y="270" width="250" height="15" rx="7" fill="#95a5a6"/>
-                    <rect x="70" y="295" width="180" height="15" rx="7" fill="#95a5a6"/>
-                    <circle cx="150" cy="80" r="25" fill="#fdbcb4"/>
-                    <rect x="130" y="105" width="40" height="60" rx="20" fill="#3498db"/>
-                    <rect x="125" y="165" width="50" height="40" rx="25" fill="#2c3e50"/>
-                    <rect x="350" y="50" width="60" height="40" rx="5" fill="#1dd1a1" opacity="0.8"/>
-                    <text x="380" y="75" text-anchor="middle" fill="white" font-size="12">HTML</text>
-                    <rect x="420" y="80" width="50" height="35" rx="5" fill="#e74c3c" opacity="0.8"/>
-                    <text x="445" y="100" text-anchor="middle" fill="white" font-size="10">CSS</text>
-                </svg>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section Présentation rapide -->
-    <section class="quick-intro">
+    <!-- En-tête de page -->
+    <header class="page-header">
         <div class="container">
-            <h2>Qui suis-je ?</h2>
-            <div class="intro-cards">
-                <div class="intro-card">
-                    <h3>🚀 Back-End & API</h3>
-                    <p>Spécialiste Laravel (PHP) pour la création d'API RESTful et d'architectures logicielles robustes et sécurisées.</p>
-                </div>
-                <div class="intro-card">
-                    <h3>📱 Mobile & Web</h3>
-                    <p>Développement cross-platform avec Flutter pour des applications Android et iOS fluides, et React JS pour les interfaces web modernes.</p>
-                </div>
-                <div class="intro-card">
-                    <h3>🌐 Réseaux & Systèmes</h3>
-                    <p>Compétences en administration réseau, support N1/N2, configuration Windows Server, VLAN, DHCP et DNS.</p>
-                </div>
-                <div class="intro-card">
-                    <h3>💡 Architecte de Solutions</h3>
-                    <p>Vision globale des projets, de la modélisation de la base de données à l'expérience utilisateur sur l'application finale.</p>
-                </div>
-            </div>
-
-            <!-- Stats rapides -->
-            <div class="stats-row">
-                <div class="stat-item">
-                    <span class="stat-number">3+</span>
-                    <span class="stat-label">Ans d'expérience</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">9+</span>
-                    <span class="stat-label">Projets réalisés</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">5+</span>
-                    <span class="stat-label">Technologies maîtrisées</span>
-                </div>
-            </div>
-
-            <div class="cta-section">
-                <h3>Découvrez mon univers</h3>
-                <div class="cta-buttons">
-                    <a href="apropos.html" class="cta-btn">En savoir plus</a>
-                    <a href="contact.html" class="cta-btn secondary">Me contacter</a>
-                </div>
-            </div>
+            <h1>Mes Projets</h1>
+            <p>Découvrez mes réalisations et expérimentations en développement web et mobile</p>
         </div>
-    </section>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="page-content">
+        <div class="container">
+
+            <!-- Filtres de projets -->
+            <section class="project-filters">
+                <h2>Filtrer par technologie</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Tous les projets</button>
+                    <button class="filter-btn" data-filter="flutter-laravel">Flutter & Laravel</button>
+                    <button class="filter-btn" data-filter="php">PHP</button>
+                    <button class="filter-btn" data-filter="full-stack">Full-Stack</button>
+                </div>
+            </section>
+
+            <!-- Grille des projets -->
+            <section class="projects-section">
+                <div class="projects-grid">
+
+                    <!-- Projet Veedni -->
+                    <div class="project-card" data-category="flutter-laravel full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/vaandi.png" alt="Mockup de l'application Veedni">
+                        </div>
+                        <div class="project-content">
+                            <h3>Veedni - Super-App E-commerce</h3>
+                            <p><strong>Défi :</strong> Créer une plateforme "tout-en-un" intégrant e-commerce, livraison de repas, pharmacie et covoiturage.</p>
+                            <p><strong>Solution :</strong> Écosystème complet avec apps mobiles Flutter, back-end Laravel et interfaces React pour admins, partenaires et utilisateurs.</p>
+                            <div class="project-tags">
+                                <span class="tag">#Flutter</span>
+                                <span class="tag">#Laravel</span>
+                                <span class="tag">#React</span>
+                                <span class="tag">#Full-Stack</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('http://admin.vaandi.app/', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet iCAISSE PRO -->
+                    <div class="project-card" data-category="php full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/icaisse-mockup.png" alt="Mockup de l'application iCAISSE PRO">
+                        </div>
+                        <div class="project-content">
+                            <h3>iCAISSE PRO - Gestion Hôtelière</h3>
+                            <p><strong>Défi :</strong> Digitaliser la gestion des opérations pour les restaurants, maquis et hôtels qui reposaient sur des processus manuels.</p>
+                            <p><strong>Solution :</strong> Application web SaaS en PHP et Ajax pour la gestion des commandes, stocks et facturation en temps réel.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#Bootstrap</span>
+                                <span class="tag">#Ajax</span>
+                                <span class="tag">#SaaS</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" disabled>Démo (sur demande)</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet ECOLEPRO224 -->
+                    <div class="project-card" data-category="php full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/ecolepro.png" alt="Mockup de l'application ECOLEPRO224">
+                        </div>
+                        <div class="project-content">
+                            <h3>ECOLEPRO224 - Gestion Scolaire</h3>
+                            <p><strong>Défi :</strong> Centraliser la gestion des élèves, notes, emplois du temps et communication parents-enseignants.</p>
+                            <p><strong>Solution :</strong> Application web modulaire PHP avec tableaux de bord personnalisés pour admins, professeurs et élèves.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#Bootstrap</span>
+                                <span class="tag">#Projet-Personnel</span>
+                                <span class="tag">#Architecture</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" disabled>Démo (sur demande)</button>
+                                <button class="project-btn secondary" onclick="window.open('https://github.com/Kourouma14', '_blank')">Code Source</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet Origo Africa -->
+                    <div class="project-card" data-category="php">
+                        <div class="project-image">
+                            <img src="assets/images/origo-mockup.png" alt="Mockup du site Origo Africa">
+                        </div>
+                        <div class="project-content">
+                            <h3>Origo Africa - Site BTP</h3>
+                            <p><strong>Défi :</strong> Établir une présence en ligne professionnelle pour une entreprise du secteur BTP afin de présenter ses réalisations.</p>
+                            <p><strong>Solution :</strong> Site vitrine sur mesure en PHP, design corporate sobre, galerie de projets et formulaire de contact optimisé.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#Bootstrap</span>
+                                <span class="tag">#Site-Vitrine</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://origo-africa.com', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet Nemeya -->
+                    <div class="project-card" data-category="flutter-laravel full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/nemeya.png" alt="Nemeya App">
+                        </div>
+                        <div class="project-content">
+                            <h3>Nemeya App</h3>
+                            <p><strong>Défi :</strong> Concevoir une interface d'administration robuste pour piloter une plateforme mobile complète.</p>
+                            <p><strong>Solution :</strong> Dashboard d'administration Laravel avec gestion des utilisateurs, contenus et statistiques en temps réel.</p>
+                            <div class="project-tags">
+                                <span class="tag">#Laravel</span>
+                                <span class="tag">#Flutter</span>
+                                <span class="tag">#Admin</span>
+                                <span class="tag">#Full-Stack</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://admin.nemeya.app', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet trool -->
+                    <div class="project-card" data-category="flutter-laravel">
+                        <div class="project-image">
+                            <img src="assets/images/trool.png" alt="trool App">
+                        </div>
+                        <div class="project-content">
+                            <h3>Trool - Gestion de Communautés</h3>
+                            <p><strong>Défi :</strong> Créer une application mobile sociale permettant la création et la gestion de groupes et communautés.</p>
+                            <p><strong>Solution :</strong> Application Flutter cross-platform avec fonctionnalités sociales, messagerie et gestion de membres.</p>
+                            <div class="project-tags">
+                                <span class="tag">#Flutter</span>
+                                <span class="tag">#Mobile</span>
+                                <span class="tag">#Social</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://trool.app', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet InformAfrik -->
+                    <div class="project-card" data-category="php">
+                        <div class="project-image">
+                            <img src="assets/images/informafrik.jpg" alt="InformAfrik">
+                        </div>
+                        <div class="project-content">
+                            <h3>InformAfrik - Portail Média</h3>
+                            <p><strong>Défi :</strong> Gérer et optimiser un portail d'information africain à fort trafic pendant plus de 2 ans.</p>
+                            <p><strong>Solution :</strong> Maintenance, optimisation SEO, sécurité, hébergement et développement de nouvelles fonctionnalités.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#WordPress</span>
+                                <span class="tag">#Media</span>
+                                <span class="tag">#SEO</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://informafrik.com', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet Dvelge Group -->
+                    <div class="project-card" data-category="php full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/dvelge.png" alt="Dvelge Group">
+                        </div>
+                        <div class="project-content">
+                            <h3>Dvelge Group - Site Corporate</h3>
+                            <p><strong>Défi :</strong> Donner une image professionnelle en ligne au groupe Dvelge et présenter ses différentes activités.</p>
+                            <p><strong>Solution :</strong> Site vitrine corporate moderne en PHP, design sobre et responsive, optimisé pour le référencement.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#Corporate</span>
+                                <span class="tag">#Business</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://dvelgegroup.com', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Projet Dvelge Formation -->
+                    <div class="project-card" data-category="php full-stack">
+                        <div class="project-image">
+                            <img src="assets/images/dvelge-formation.png" alt="Dvelge Formation">
+                        </div>
+                        <div class="project-content">
+                            <h3>Dvelge Formation - E-learning</h3>
+                            <p><strong>Défi :</strong> Mettre en place une plateforme de gestion des formations et d'apprentissage en ligne pour le groupe Dvelge.</p>
+                            <p><strong>Solution :</strong> Plateforme LMS en PHP avec gestion des apprenants, des cours, des inscriptions et des certifications.</p>
+                            <div class="project-tags">
+                                <span class="tag">#PHP</span>
+                                <span class="tag">#Education</span>
+                                <span class="tag">#LMS</span>
+                            </div>
+                            <div class="project-actions">
+                                <button class="project-btn" onclick="window.open('https://formation.dvelgegroup.com', '_blank')">Voir le site</button>
+                                <button class="project-btn secondary" disabled>Code (Privé)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -117,5 +263,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="assets/js/projets.js"></script>
 </body>
 </html>
