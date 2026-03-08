@@ -18,7 +18,7 @@ function initNavigation() {
         }
     });
 
-    // Navigation mobile (si implémentée)
+    // Navigation mobile 
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
     
