@@ -1,6 +1,42 @@
 // Portfolio JavaScript Principal
 // Fichier script.js partagé par toutes les pages
 
+// ==================== CHARGEMENT DES COMPOSANTS ====================
+
+/**
+ * Charge les composants HTML réutilisables (comme la nav et le footer) dans la page.
+ * @param {string} component - Le nom du fichier du composant (ex: 'nav.html').
+ * @param {string} targetId - L'ID de l'élément où injecter le composant.
+ */
+async function loadComponent(component, targetId) {
+    try {
+        const response = await fetch(component);
+        if (!response.ok) {
+            throw new Error(`Composant ${component} non trouvé.`);
+        }
+        const text = await response.text();
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.innerHTML = text;
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement du composant:', error);
+    }
+}
+
+/**
+ * Initialise le chargement de tous les composants et exécute les autres scripts.
+ */
+async function initializePage() {
+    await Promise.all([
+        loadComponent('nav.html', 'navbar-placeholder'),
+        loadComponent('footer.html', 'footer-placeholder')
+    ]);
+
+    // Une fois les composants chargés, on peut initialiser les autres scripts
+    initPortfolio();
+}
+
 // ==================== NAVIGATION ====================
 
 function initNavigation() {
@@ -464,11 +500,7 @@ function initPortfolio() {
 }
 
 // Réinitialiser si le DOM est déjà chargé
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPortfolio);
-} else {
-    initPortfolio();
-}
+document.addEventListener('DOMContentLoaded', initializePage);
 
 // ==================== GESTION DES RESIZE ====================
 
