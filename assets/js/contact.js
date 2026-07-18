@@ -18,22 +18,22 @@ messageTextarea.addEventListener('input', function() {
 // Affichage des messages
 function showMessage(text, type) {
     const message = document.createElement('div');
-    message.className = `message ${type}`;
-    message.style.display = 'flex';
-    message.style.alignItems = 'center';
-    message.style.gap = '10px';
+    // On ajoute une classe de base et une classe pour le type (success/error)
+    message.className = `form-message ${type}`;
     message.innerHTML = `
         <span>${type === 'success' ? '✅' : '❌'}</span>
         <span>${text}</span>
     `;
 
+    // Vider le conteneur et ajouter le nouveau message
     messageContainer.innerHTML = '';
     messageContainer.appendChild(message);
     message.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
+    // Lancer l'animation de disparition après un délai
     setTimeout(() => {
-        message.style.opacity = '0';
-        setTimeout(() => message.remove(), 300);
+        message.classList.add('fade-out');
+        message.addEventListener('transitionend', () => message.remove());
     }, 6000);
 }
 
@@ -184,25 +184,3 @@ function toggleFAQ(element) {
         faqItem.querySelector('.faq-icon').textContent = '−';
     }
 }
-
-// Animation au scroll
-document.addEventListener('DOMContentLoaded', () => {
-    const elements = document.querySelectorAll('.contact-card, .social-link');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, index * 100);
-            }
-        });
-    });
-
-    elements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.6s ease';
-        observer.observe(el);
-    });
-});

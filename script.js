@@ -40,19 +40,7 @@ async function initializePage() {
 // ==================== NAVIGATION ====================
 
 function initNavigation() {
-    const navbar = document.querySelector('.navbar');
     const navLinks = document.querySelectorAll('.nav-link');
-    
-    // Effet de défilement sur la navbar
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            navbar.style.background = 'rgba(44, 44, 44, 0.95)';
-            navbar.style.backdropFilter = 'blur(10px)';
-        } else {
-            navbar.style.background = '#2c2c2c';
-            navbar.style.backdropFilter = 'none';
-        }
-    });
 
     // Navigation mobile 
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
@@ -99,36 +87,17 @@ function createBackToTopButton() {
     // Créer le bouton
     const backToTopBtn = document.createElement('button');
     backToTopBtn.innerHTML = '↑';
+    backToTopBtn.setAttribute('aria-label', 'Retour en haut de la page');
     backToTopBtn.className = 'back-to-top';
-    backToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        width: 50px;
-        height: 50px;
-        border: none;
-        border-radius: 50%;
-        background: var(--primary-color);
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    `;
 
     document.body.appendChild(backToTopBtn);
 
     // Afficher/masquer selon le scroll
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
+            backToTopBtn.classList.add('visible');
         } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
+            backToTopBtn.classList.remove('visible');
         }
     });
 
@@ -138,17 +107,6 @@ function createBackToTopButton() {
             top: 0,
             behavior: 'smooth'
         });
-    });
-
-    // Effet hover
-    backToTopBtn.addEventListener('mouseenter', () => {
-        backToTopBtn.style.background = '#17a085';
-        backToTopBtn.style.transform = 'translateY(-3px)';
-    });
-
-    backToTopBtn.addEventListener('mouseleave', () => {
-        backToTopBtn.style.background = 'var(--primary-color)';
-        backToTopBtn.style.transform = 'translateY(0)';
     });
 }
 
@@ -161,35 +119,24 @@ function initAnimations() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                
-                // Animation spéciale pour les éléments avec data-delay
-                const delay = entry.target.dataset.delay || 0;
-                setTimeout(() => {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }, delay);
+                const el = entry.target;
+                // Appliquer le délai de transition s'il est défini
+                const delay = el.dataset.delay || '0';
+                el.style.transitionDelay = `${delay}ms`;
+
+                el.classList.add('visible');
+                obs.unobserve(el); // Ne plus observer une fois l'animation lancée
             }
         });
     }, observerOptions);
 
     // Observer les éléments animables
     document.querySelectorAll([
-        '.hero-text',
-        '.hero-image',
-        '.intro-card',
-        '.project-card',
-        '.skill-item',
-        '.about-text',
-        '.contact-card'
+        '.animatable' // On cible une classe générique
     ].join(', ')).forEach(el => {
-        // Préparer l'animation
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'all 0.8s ease';
         observer.observe(el);
     });
 }
@@ -303,6 +250,13 @@ function updateScrollEffects() {
         const speed = el.dataset.speed || 0.5;
         el.style.transform = `translateY(${scrollY * speed}px)`;
     });
+
+    // Effet de défilement sur la navbar (optimisé)
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+        // On utilise une classe CSS plutôt que de manipuler les styles directement
+        navbar.classList.toggle('scrolled', scrollY > 50);
+    }
     
     ticking = false;
 }

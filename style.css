@@ -32,7 +32,15 @@ body {
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: var(--shadow);
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+/* Style de la navbar au défilement */
+.navbar.scrolled {
+    background: rgba(44, 44, 44, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Pour la compatibilité Safari */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .nav-container {
@@ -734,6 +742,51 @@ body {
         transform: translateY(0);
     }
 }
+
+/* Système d'animation au scroll générique */
+.animatable {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animatable.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Styles pour le bouton "Retour en haut" */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-color);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: #17a085; /* Une teinte plus claire de votre couleur primaire */
+    transform: translateY(-3px);
+}
+
 
 /* Utilitaires */
 .text-center {

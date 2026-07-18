@@ -35,10 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     card.classList.remove('hidden');
                 } else {
                     card.classList.add('hidden');
-                    // La transition CSS gère l'animation, et on peut cacher l'élément après
-                    setTimeout(() => {
+                    // On écoute la fin de la transition pour cacher l'élément,
+                    // c'est plus robuste qu'un setTimeout.
+                    card.addEventListener('transitionend', () => {
                         if (card.classList.contains('hidden')) card.style.display = 'none';
-                    }, 300); // Doit correspondre à la durée de la transition CSS
+                    }, { once: true }); // L'option { once: true } supprime l'écouteur après son exécution.
                 }
             });
         });
