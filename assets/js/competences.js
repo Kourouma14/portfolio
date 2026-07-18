@@ -1,83 +1,54 @@
- 
-        // Animation des barres de compétences
-        function animateSkillBars() {
-            const skillBars = document.querySelectorAll('.skill-progress');
-            skillBars.forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                setTimeout(() => {
-                    bar.style.width = width + '%';
-                }, 500);
-            });
-        }
+// Fichier : assets/js/competences.js
 
-        // Animation des niveaux de soft skills
-        function animateSoftSkills() {
-            const levelFills = document.querySelectorAll('.level-fill');
-            levelFills.forEach(fill => {
-                const level = parseInt(fill.getAttribute('data-level'));
-                const percentage = (level / 5) * 100;
-                setTimeout(() => {
-                    fill.style.width = percentage + '%';
-                }, 800);
-            });
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Animation des barres de progression ---
+    const progressObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                let targetWidth = '0%';
 
-        // Animation des barres de progression d'apprentissage
-        function animateLearningProgress() {
-            const progressFills = document.querySelectorAll('.progress-fill');
-            progressFills.forEach(fill => {
-                const progress = fill.getAttribute('data-progress');
-                setTimeout(() => {
-                    fill.style.width = progress + '%';
-                }, 1000);
-            });
-        }
-
-        // Observer pour déclencher les animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.classList.contains('skills-section')) {
-                        animateSkillBars();
-                    } else if (entry.target.classList.contains('soft-skills-section')) {
-                        animateSoftSkills();
-                    } else if (entry.target.classList.contains('learning-section')) {
-                        animateLearningProgress();
-                    }
+                if (element.classList.contains('skill-progress') || element.classList.contains('progress-fill')) {
+                    targetWidth = element.getAttribute('data-width') || element.getAttribute('data-progress') || '0';
+                    targetWidth += '%';
+                } else if (element.classList.contains('level-fill')) {
+                    const level = parseInt(element.getAttribute('data-level'), 10) || 0;
+                    targetWidth = (level / 5) * 100 + '%';
                 }
-            });
+
+                // Appliquer l'animation
+                element.style.width = targetWidth;
+
+                // Ne plus observer cet élément
+                observer.unobserve(element);
+            }
         });
+    }, { threshold: 0.5 });
 
-        // Observer les sections
-        document.querySelectorAll('.skills-section, .soft-skills-section, .learning-section').forEach(section => {
-            observer.observe(section);
+    document.querySelectorAll('.skill-progress, .level-fill, .progress-fill').forEach(bar => {
+        // Initialiser la largeur à 0 pour l'animation
+        bar.style.width = '0%';
+        bar.style.transition = 'width 1.2s cubic-bezier(0.25, 1, 0.5, 1)';
+        progressObserver.observe(bar);
+    });
+
+    // --- Animation d'apparition des cartes et éléments ---
+    const cardObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Appliquer un délai staggered pour un effet plus fluide
+                entry.target.style.transitionDelay = `${index * 100}ms`;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
         });
+    }, { threshold: 0.1 });
 
-        // Animation d'apparition des cartes
-        const animateCards = () => {
-            const cards = document.querySelectorAll('.soft-skill-card, .learning-card, .goal-card, .timeline-item');
-            
-            const cardObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 100);
-                    }
-                });
-            });
-
-            cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'all 0.6s ease';
-                cardObserver.observe(card);
-            });
-        };
-
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', () => {
-            animateCards();
-        });
- 
+    document.querySelectorAll('.soft-skill-card, .learning-card, .goal-card, .timeline-item').forEach(card => {
+        // La préparation (opacity: 0, transform) doit être faite en CSS
+        // pour éviter un flash de contenu non stylé.
+        // Assurez-vous d'avoir une classe comme .soft-skill-card { opacity: 0; ... }
+        // et .soft-skill-card.visible { opacity: 1; ... }
+        cardObserver.observe(card);
+    });
+});
