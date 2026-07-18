@@ -38,21 +38,25 @@ function showMessage(text, type) {
 }
 
 // Validation du formulaire
+const validationRules = [
+    { field: 'prenom',  test: value => value.trim().length >= 2, message: 'Le prénom doit contenir au moins 2 caractères' },
+    { field: 'nom',     test: value => value.trim().length >= 2, message: 'Le nom doit contenir au moins 2 caractères' },
+    { field: 'email',   test: value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value), message: 'Format d\'email invalide' },
+    { field: 'sujet',   test: value => !!value, message: 'Veuillez choisir un sujet' },
+    { field: 'message', test: value => value.trim().length >= 10, message: 'Le message doit contenir au moins 10 caractères' },
+    { field: 'message', test: value => value.trim().length <= 500, message: 'Le message ne peut pas dépasser 500 caractères' }
+];
+
 function validateForm(formData) {
     const errors = [];
-    if (!formData.prenom.trim() || formData.prenom.trim().length < 2)
-        errors.push('Le prénom doit contenir au moins 2 caractères');
-    if (!formData.nom.trim() || formData.nom.trim().length < 2)
-        errors.push('Le nom doit contenir au moins 2 caractères');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email))
-        errors.push('Format d\'email invalide');
-    if (!formData.sujet)
-        errors.push('Veuillez choisir un sujet');
-    if (!formData.message.trim() || formData.message.trim().length < 10)
-        errors.push('Le message doit contenir au moins 10 caractères');
-    if (formData.message.trim().length > 500)
-        errors.push('Le message ne peut pas dépasser 500 caractères');
+
+    validationRules.forEach(rule => {
+        const value = formData[rule.field];
+        if (!rule.test(value)) {
+            errors.push(rule.message);
+        }
+    });
+
     return errors;
 }
 
@@ -64,14 +68,10 @@ contactForm.addEventListener('submit', async (e) => {
     const btnText = submitBtn.querySelector('.btn-text');
     const btnLoading = submitBtn.querySelector('.btn-loading');
 
-    const formData = {
-        prenom:    document.getElementById('prenom').value,
-        nom:       document.getElementById('nom').value,
-        email:     document.getElementById('email').value,
-        telephone: document.getElementById('telephone').value || 'Non renseigné',
-        sujet:     document.getElementById('sujet').value,
-        message:   document.getElementById('message').value
-    };
+    // Utiliser l'API FormData pour une récupération simple et maintenable
+    const form = new FormData(e.target);
+    const formData = Object.fromEntries(form.entries());
+    formData.telephone = formData.telephone || 'Non renseigné';
 
     // Validation
     const errors = validateForm(formData);
@@ -127,18 +127,20 @@ contactForm.addEventListener('submit', async (e) => {
         console.error('Text:', error.text);
         showMessage('Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement par email.', 'error');
     }
-
-    // Remettre le bouton normal
-    submitBtn.disabled = false;
-    btnText.style.display = 'inline';
-    btnLoading.style.display = 'none';
+    finally {
+        // Ce bloc s'exécute toujours, que l'envoi ait réussi ou échoué.
+        // On s'assure ainsi que le bouton n'est jamais bloqué.
+        submitBtn.disabled = false;
+        btnText.style.display = 'inline';
+        btnLoading.style.display = 'none';
+    }
 });
 
 // ==================== FONCTIONS UTILITAIRES ====================
 
-function copyToClipboard(text) {
+function copyToClipboard(text, label) {
     navigator.clipboard.writeText(text).then(() => {
-        showMessage(`"${text}" copié dans le presse-papiers !`, 'success');
+        showMessage(`${label} a été copié dans le presse-papiers !`, 'success');
         // Envoi d'un événement de copie à Google Analytics
         if (typeof gtag === 'function') {
             gtag('event', 'copy_contact_info', {
@@ -166,21 +168,32 @@ function openLinkedIn() {
     window.open('https://www.linkedin.com/in/abdoulaye-kourouma-32b1761a3', '_blank');
 }
 
-// FAQ Toggle
-function toggleFAQ(element) {
-    const faqItem = element.parentElement;
-    const answer = faqItem.querySelector('.faq-answer');
-    const isOpen = faqItem.classList.contains('active');
-
-    document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
-        item.querySelector('.faq-answer').style.maxHeight = '0';
-        item.querySelector('.faq-icon').textContent = '+';
+// ==================== FAQ ACCORDION ====================
+function initContactPage() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', () => {
+            const faqItem = question.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const isOpen = faqItem.classList.contains('active');
+            
+            // Close all other items for an accordion effect
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').style.maxHeight = null;
+                item.querySelector('.faq-icon').textContent = '+';
+            });
+            
+            // Open the clicked item if it was closed
+            if (!isOpen) {
+                faqItem.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                question.querySelector('.faq-icon').textContent = '−';
+            }
+        });
     });
-
-    if (!isOpen) {
-        faqItem.classList.add('active');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-        faqItem.querySelector('.faq-icon').textContent = '−';
-    }
 }
+
+window.pageInitializers = window.pageInitializers || {};
+window.pageInitializers.contact = initContactPage;

@@ -1,6 +1,6 @@
 // Fichier : assets/js/projets.js
 
-document.addEventListener('DOMContentLoaded', () => {
+function initProjetsPage() {
     const filterBtns = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.project-card');
 
@@ -58,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
     projectCards.forEach(card => {
         observer.observe(card);
     });
-});
+}
+
+window.pageInitializers = window.pageInitializers || {};
+window.pageInitializers.projets = initProjetsPage;
 
 // --- Fonctions pour les actions des projets (exposées globalement) ---
 function viewProject(projectName) {

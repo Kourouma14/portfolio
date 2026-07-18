@@ -1,6 +1,6 @@
 // Fichier : assets/js/competences.js
 
-document.addEventListener('DOMContentLoaded', () => {
+function initCompetencesPage() {
     // --- Animation des barres de progression ---
     const progressObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -51,4 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // et .soft-skill-card.visible { opacity: 1; ... }
         cardObserver.observe(card);
     });
-});
+}
+
+window.pageInitializers = window.pageInitializers || {};
+window.pageInitializers.competences = initCompetencesPage;

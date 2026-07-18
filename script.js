@@ -42,6 +42,15 @@ async function initializePage() {
 function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
 
+    // Met en évidence le lien de navigation actif
+    const currentPage = window.location.pathname.split('/').pop();
+    navLinks.forEach(link => {
+        // Gère le cas où l'on est à la racine (index.html)
+        if (link.getAttribute('href') === currentPage || (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+            link.classList.add('active');
+        }
+    });
+
     // Navigation mobile 
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
@@ -55,7 +64,7 @@ function initNavigation() {
     // Fermer le menu mobile en cliquant sur un lien
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (navMenu) {
+            if (navMenu && navMenu.classList.contains('active')) {
                 navMenu.classList.remove('active');
             }
         });
@@ -91,15 +100,6 @@ function createBackToTopButton() {
     backToTopBtn.className = 'back-to-top';
 
     document.body.appendChild(backToTopBtn);
-
-    // Afficher/masquer selon le scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-        }
-    });
 
     // Action du bouton
     backToTopBtn.addEventListener('click', () => {
@@ -258,6 +258,12 @@ function updateScrollEffects() {
         navbar.classList.toggle('scrolled', scrollY > 50);
     }
     
+    // Afficher/masquer le bouton "Retour en haut" (optimisé)
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (backToTopBtn) {
+        backToTopBtn.classList.toggle('visible', scrollY > 300);
+    }
+
     ticking = false;
 }
 
@@ -446,6 +452,14 @@ function initPortfolio() {
     
     // Thème (si activé)
     // initThemeToggle();
+
+    // Exécuter les initialiseurs spécifiques à la page
+    const pageName = document.body.dataset.page;
+    if (pageName && window.pageInitializers && typeof window.pageInitializers[pageName] === 'function') {
+        window.pageInitializers[pageName]();
+    } else if (pageName) {
+        console.log(`Aucun initialiseur trouvé pour la page : ${pageName}`);
+    }
 }
 
 // Réinitialiser si le DOM est déjà chargé
