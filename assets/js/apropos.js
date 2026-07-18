@@ -16,6 +16,14 @@ function downloadCV() {
     const cvFileName = 'CV ABDDOULAYE KOUROUMA -Fév 2026.pdf';
     const cvPath = `assets/cv/${cvFileName}`;
 
+    // Envoi d'un événement à Google Analytics
+    if (typeof gtag === 'function') {
+        gtag('event', 'download', {
+            'event_category': 'engagement',
+            'event_label': 'CV Download'
+        });
+    }
+
     // Crée un lien temporaire pour déclencher le téléchargement
     const link = document.createElement('a');
     link.href = cvPath;

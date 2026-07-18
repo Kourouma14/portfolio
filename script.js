@@ -456,6 +456,7 @@ function enhanceAccessibility() {
     window.announceToScreenReader = announceToScreenReader;
 }
 
+
 // ==================== LAZY LOADING ====================
 
 // Chargement paresseux des images
@@ -491,12 +492,6 @@ function initPortfolio() {
     
     // Thème (si activé)
     // initThemeToggle();
-    
-    // Analytics simples (visites de page)
-    const pageViews = getUserPreference('pageViews', 0);
-    saveUserPreference('pageViews', pageViews + 1);
-    
-    console.log(`Portfolio chargé - Visite #${pageViews + 1}`);
 }
 
 // Réinitialiser si le DOM est déjà chargé

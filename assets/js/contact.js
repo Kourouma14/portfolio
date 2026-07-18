@@ -77,6 +77,13 @@ contactForm.addEventListener('submit', async (e) => {
     const errors = validateForm(formData);
     if (errors.length > 0) {
         showMessage(errors.join(' — '), 'error');
+        // Envoi d'un événement d'erreur de validation à Google Analytics
+        if (typeof gtag === 'function') {
+            gtag('event', 'form_error', {
+                'event_category': 'contact',
+                'event_label': errors.join(' | ')
+            });
+        }
         return;
     }
 
@@ -95,12 +102,27 @@ contactForm.addEventListener('submit', async (e) => {
             message:   formData.message
         });
 
+        // Envoi d'un événement de succès à Google Analytics
+        if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', { // Événement standard pour la génération de prospects
+                'event_category': 'contact',
+                'event_label': 'Form Success'
+            });
+        }
+
         showMessage('Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.', 'success');
         contactForm.reset();
         charCounter.textContent = '0/500 caractères';
 
     } catch (error) {
         console.error('EmailJS error complet:', error);
+        // Envoi d'une exception à Google Analytics
+        if (typeof gtag === 'function') {
+            gtag('event', 'exception', {
+                'description': `EmailJS Send Error: ${error.status}`,
+                'fatal': false
+            });
+        }
         console.error('Status:', error.status);
         console.error('Text:', error.text);
         showMessage('Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement par email.', 'error');
@@ -117,6 +139,13 @@ contactForm.addEventListener('submit', async (e) => {
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
         showMessage(`"${text}" copié dans le presse-papiers !`, 'success');
+        // Envoi d'un événement de copie à Google Analytics
+        if (typeof gtag === 'function') {
+            gtag('event', 'copy_contact_info', {
+                'event_category': 'engagement',
+                'event_label': text
+            });
+        }
     }).catch(() => {
         showMessage('Erreur lors de la copie', 'error');
     });
@@ -127,6 +156,13 @@ function openMaps() {
 }
 
 function openLinkedIn() {
+    // Envoi d'un événement de clic sur le lien LinkedIn
+    if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+            'content_type': 'social_link',
+            'item_id': 'LinkedIn'
+        });
+    }
     window.open('https://www.linkedin.com/in/abdoulaye-kourouma-32b1761a3', '_blank');
 }
 

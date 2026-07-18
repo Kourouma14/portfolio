@@ -1,73 +1,83 @@
+// Fichier : assets/js/projets.js
 
-        // Système de filtrage des projets
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const projectCards = document.querySelectorAll('.project-card');
+document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Retirer la classe active de tous les boutons
-                filterBtns.forEach(b => b.classList.remove('active'));
-                // Ajouter la classe active au bouton cliqué
-                btn.classList.add('active');
+    if (!filterBtns.length || !projectCards.length) {
+        console.warn('Éléments de filtre ou cartes de projet non trouvés.');
+        return;
+    }
 
-                const filter = btn.getAttribute('data-filter');
-                
-                projectCards.forEach(card => {
-                    if (filter === 'all') {
-                        card.style.display = 'block';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'scale(1)';
-                        }, 100);
-                    } else {
-                        const categories = card.getAttribute('data-category');
-                        if (categories && categories.includes(filter)) {
-                            card.style.display = 'block';
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'scale(1)';
-                            }, 100);
-                        } else {
-                            card.style.opacity = '0';
-                            card.style.transform = 'scale(0.8)';
-                            setTimeout(() => {
-                                card.style.display = 'none';
-                            }, 300);
-                        }
-                    }
+    // --- Système de filtrage des projets ---
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+
+            // Envoi d'un événement de filtre à Google Analytics
+            if (typeof gtag === 'function') {
+                gtag('event', 'view_item_list', {
+                    'event_category': 'engagement',
+                    'item_list_name': 'Projects',
+                    'item_list_id': filter
                 });
-            });
-        });
-
-        // Fonctions pour les actions des projets
-        function viewProject(projectName) {
-            alert(`Ouverture du projet : ${projectName}\n(Dans un vrai site, cela ouvrirait le projet en ligne)`);
-        }
-
-        function viewCode(projectName) {
-            alert(`Affichage du code source : ${projectName}\n(Dans un vrai site, cela redirigerait vers GitHub)`);
-        }
-
-        // Animation d'apparition des cartes
-        const observeProjects = () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 150);
-                    }
-                });
-            });
+            }
 
             projectCards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(50px)';
-                card.style.transition = 'all 0.6s ease';
-                observer.observe(card);
-            });
-        };
+                const categories = card.getAttribute('data-category');
+                const matchesFilter = (filter === 'all' || (categories && categories.includes(filter)));
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', observeProjects);
+                if (matchesFilter) {
+                    card.style.display = 'block';
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                    // La transition CSS gère l'animation, et on peut cacher l'élément après
+                    setTimeout(() => {
+                        if (card.classList.contains('hidden')) card.style.display = 'none';
+                    }, 300); // Doit correspondre à la durée de la transition CSS
+                }
+            });
+        });
+    });
+
+    // --- Animation d'apparition des cartes ---
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    projectCards.forEach(card => {
+        observer.observe(card);
+    });
+});
+
+// --- Fonctions pour les actions des projets (exposées globalement) ---
+function viewProject(projectName) {
+    if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+            'content_type': 'project_live',
+            'item_id': projectName
+        });
+    }
+    // TODO: Remplacer l'alerte par une action réelle, ex: window.open('URL_DU_PROJET', '_blank');
+    alert(`Ouverture du projet : ${projectName}\n(Fonctionnalité à implémenter)`);
+}
+
+function viewCode(projectName) {
+    if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+            'content_type': 'project_code',
+            'item_id': projectName
+        });
+    }
+    // TODO: Remplacer l'alerte par une action réelle, ex: window.open('URL_GITHUB', '_blank');
+    alert(`Affichage du code source : ${projectName}\n(Fonctionnalité à implémenter)`);
+}
