@@ -3,26 +3,75 @@
 
 // ==================== CHARGEMENT DES COMPOSANTS ====================
 
+const defaultComponents = {
+    'nav.html': `
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Y3WR9CCY7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9Y3WR9CCY7');
+</script>
+
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">KOUROUMA <span class="highlight">ABDOULAYE</span></div>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Accueil</a></li>
+            <li><a href="apropos.html" class="nav-link">À propos</a></li>
+            <li><a href="projets.html" class="nav-link">Projets</a></li>
+            <li><a href="competences.html" class="nav-link">Compétences</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Ouvrir le menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
+</nav>
+`,
+    'footer.html': `
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div>Designed by Abdoulaye with HTML CSS JS</div>
+        <div>Tous droits réservés - 2026</div>
+    </div>
+</footer>
+`
+};
+
 /**
  * Charge les composants HTML réutilisables (comme la nav et le footer) dans la page.
  * @param {string} component - Le nom du fichier du composant (ex: 'nav.html').
  * @param {string} targetId - L'ID de l'élément où injecter le composant.
  */
 async function loadComponent(component, targetId) {
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) {
+        return;
+    }
+
     try {
         const response = await fetch(component);
         if (!response.ok) {
             throw new Error(`Composant ${component} non trouvé.`);
         }
         const text = await response.text();
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            targetElement.innerHTML = text;
-            executeEmbeddedScripts(targetElement);
-        }
+        targetElement.innerHTML = text;
     } catch (error) {
-        console.error('Erreur lors du chargement du composant:', error);
+        console.warn(`Impossible de charger ${component}, utilisation du fallback local.`, error);
+        if (defaultComponents[component] !== undefined) {
+            targetElement.innerHTML = defaultComponents[component];
+        } else {
+            targetElement.innerHTML = '';
+        }
     }
+
+    executeEmbeddedScripts(targetElement);
 }
 
 /**
@@ -479,6 +528,7 @@ function initPortfolio() {
 }
 
 // Enregistrer l'initialiseur pour la page d'accueil
+window.pageInitializers = window.pageInitializers || {};
 window.pageInitializers.home = initHomePage;
 
 // Réinitialiser si le DOM est déjà chargé
