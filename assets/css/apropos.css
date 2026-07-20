@@ -100,14 +100,14 @@
 
 /* ==================== GRILLE FORMATION ==================== */
 
-.experience-grid {
+.education-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
 
-.experience-card {
+.education-card {
     background: white;
     padding: 1.5rem;
     border-radius: 12px;
@@ -115,21 +115,21 @@
     border-left: 4px solid var(--primary-color);
 }
 
-.experience-card h3 {
+.education-card h3 {
     color: var(--primary-color);
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 0.25rem;
 }
 
-.experience-card h4 {
+.education-card h4 {
     color: var(--light-text);
     font-size: 0.85rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
 }
 
-.experience-card p {
+.education-card p {
     color: var(--light-text);
     font-size: 0.88rem;
     line-height: 1.55;

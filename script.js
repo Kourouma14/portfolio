@@ -28,12 +28,14 @@ async function loadComponent(component, targetId) {
  * Initialise le chargement de tous les composants et exécute les autres scripts.
  */
 async function initializePage() {
+    // On attend que les composants soient chargés
     await Promise.all([
         loadComponent('nav.html', 'navbar-placeholder'),
         loadComponent('footer.html', 'footer-placeholder')
     ]);
 
-    // Une fois les composants chargés, on peut initialiser les autres scripts
+    // Une fois que les composants sont bien en place dans le DOM,
+    // on peut initialiser les scripts qui dépendent d'eux (comme la navigation).
     initPortfolio();
 }
 
@@ -42,11 +44,13 @@ async function initializePage() {
 function initNavigation() {
     const navLinks = document.querySelectorAll('.nav-link');
 
-    // Met en évidence le lien de navigation actif
-    const currentPage = window.location.pathname.split('/').pop();
+    // Récupère le nom de la page depuis l'attribut data-page du body
+    const currentPage = document.body.dataset.page;
+
     navLinks.forEach(link => {
-        // Gère le cas où l'on est à la racine (index.html)
-        if (link.getAttribute('href') === currentPage || (currentPage === '' && link.getAttribute('href') === 'index.html')) {
+        // Le href du lien (ex: "projets.html")
+        const linkPage = link.getAttribute('href').replace('.html', '');
+        if (linkPage === currentPage || (currentPage === 'home' && linkPage === 'index')) {
             link.classList.add('active');
         }
     });
@@ -54,7 +58,7 @@ function initNavigation() {
     // Navigation mobile 
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
-    
+
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -274,73 +278,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// ==================== INTERACTIONS SPÉCIFIQUES ====================
-
-// Effet de typing pour les textes
-function typeWriter(element, text, speed = 50) {
-    if (!element) return;
-    
-    element.textContent = '';
-    let i = 0;
-    
-    function type() {
-        if (i < text.length) {
-            element.textContent += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    
-    type();
-}
-
-// Animation de compteur
-function animateCounter(element, start, end, duration = 2000) {
-    if (!element) return;
-    
-    const startTime = performance.now();
-    const difference = end - start;
-    
-    function updateCounter(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // Easing function (easeOutCubic)
-        const easeProgress = 1 - Math.pow(1 - progress, 3);
-        
-        const current = Math.round(start + difference * easeProgress);
-        element.textContent = current;
-        
-        if (progress < 1) {
-            requestAnimationFrame(updateCounter);
-        }
-    }
-    
-    requestAnimationFrame(updateCounter);
-}
-
-// ==================== VALIDATION DE FORMULAIRES ====================
-
-// Validation d'email
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Validation de téléphone
-function isValidPhone(phone) {
-    const phoneRegex = /^[\+]?[0-9\s\-\(\)]{8,}$/;
-    return phoneRegex.test(phone);
-}
-
-// Nettoyage des entrées utilisateur
-function sanitizeInput(input) {
-    return input
-        .trim()
-        .replace(/[<>]/g, '') // Supprime les balises potentielles
-        .substring(0, 1000); // Limite la longueur
-}
-
 // ==================== STOCKAGE LOCAL ====================
 
 // Sauvegarder des préférences utilisateur
@@ -416,6 +353,65 @@ function enhanceAccessibility() {
     window.announceToScreenReader = announceToScreenReader;
 }
 
+// ==================== HOME PAGE SPECIFIC ====================
+
+function initHomePage() {
+    // --- Effet de machine à écrire ---
+    function typeWriter(element, text, speed = 50) {
+        if (!element) return;
+        
+        element.textContent = '';
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+
+    // --- Animation de compteur ---
+    function animateCounter(element, start, end, duration = 2000) {
+        if (!element) return;
+
+        const startTime = performance.now();
+        const difference = end - start;
+
+        function updateCounter(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Utilise une fonction d'accélération pour un effet plus doux
+            const easeProgress = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+            const current = Math.round(start + difference * easeProgress);
+            // Ajoute le '+' si l'élément original en avait un
+            element.textContent = current + (element.dataset.plus === 'true' ? '+' : '');
+
+            if (progress < 1) {
+                requestAnimationFrame(updateCounter);
+            }
+        }
+        requestAnimationFrame(updateCounter);
+    }
+
+    // Lancer les animations spécifiques à la page d'accueil
+    document.querySelectorAll('.stat-number').forEach(counter => {
+        const originalText = counter.textContent;
+        if (originalText.includes('+')) {
+            counter.dataset.plus = 'true';
+        }
+        const endValue = parseInt(originalText.replace('+', ''), 10);
+        if (!isNaN(endValue)) {
+            // On part de 0 pour l'animation
+            counter.textContent = '0';
+            animateCounter(counter, 0, endValue, 2500);
+        }
+    });
+}
+
 
 // ==================== LAZY LOADING ====================
 
@@ -457,10 +453,11 @@ function initPortfolio() {
     const pageName = document.body.dataset.page;
     if (pageName && window.pageInitializers && typeof window.pageInitializers[pageName] === 'function') {
         window.pageInitializers[pageName]();
-    } else if (pageName) {
-        console.log(`Aucun initialiseur trouvé pour la page : ${pageName}`);
     }
 }
+
+// Enregistrer l'initialiseur pour la page d'accueil
+window.pageInitializers.home = initHomePage;
 
 // Réinitialiser si le DOM est déjà chargé
 document.addEventListener('DOMContentLoaded', initializePage);
@@ -473,20 +470,3 @@ const debouncedResize = debounce(() => {
 }, 250);
 
 window.addEventListener('resize', debouncedResize);
-
-// ==================== EXPORT DES FONCTIONS UTILITAIRES ====================
-
-// Exposer certaines fonctions globalement pour les pages spécifiques
-window.portfolioUtils = {
-    typeWriter,
-    animateCounter,
-    isValidEmail,
-    isValidPhone,
-    sanitizeInput,
-    debounce,
-    throttle,
-    isMobile,
-    isTablet,
-    saveUserPreference,
-    getUserPreference
-};

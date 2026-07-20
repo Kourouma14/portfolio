@@ -66,6 +66,15 @@
     transform: scale(1);
 }
 
+/* Classe pour gérer l'état caché avec une transition douce */
+.project-card.hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    pointer-events: none; /* Empêche les clics pendant la disparition */
+    height: 0; /* Réduit la hauteur pour que l'espace se réorganise */
+    margin-bottom: -24px; /* Compense le 'gap' de la grille */
+}
+
 .project-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0,0,0,0.15);

@@ -136,42 +136,11 @@ contactForm.addEventListener('submit', async (e) => {
     }
 });
 
-// ==================== FONCTIONS UTILITAIRES ====================
-
-function copyToClipboard(text, label) {
-    navigator.clipboard.writeText(text).then(() => {
-        showMessage(`${label} a été copié dans le presse-papiers !`, 'success');
-        // Envoi d'un événement de copie à Google Analytics
-        if (typeof gtag === 'function') {
-            gtag('event', 'copy_contact_info', {
-                'event_category': 'engagement',
-                'event_label': text
-            });
-        }
-    }).catch(() => {
-        showMessage('Erreur lors de la copie', 'error');
-    });
-}
-
-function openMaps() {
-    window.open('https://www.google.com/maps/place/Conakry,+Guinée', '_blank');
-}
-
-function openLinkedIn() {
-    // Envoi d'un événement de clic sur le lien LinkedIn
-    if (typeof gtag === 'function') {
-        gtag('event', 'select_content', {
-            'content_type': 'social_link',
-            'item_id': 'LinkedIn'
-        });
-    }
-    window.open('https://www.linkedin.com/in/abdoulaye-kourouma-32b1761a3', '_blank');
-}
-
-// ==================== FAQ ACCORDION ====================
+// ==================== INITIALISATION DE LA PAGE CONTACT ====================
 function initContactPage() {
     const faqQuestions = document.querySelectorAll('.faq-question');
     
+    // --- Logique de l'accordéon FAQ ---
     faqQuestions.forEach(question => {
         question.addEventListener('click', () => {
             const faqItem = question.parentElement;
@@ -193,6 +162,42 @@ function initContactPage() {
             }
         });
     });
+
+    // --- Logique des boutons d'action ---
+    function copyToClipboard(text, label) {
+        navigator.clipboard.writeText(text).then(() => {
+            showMessage(`${label} a été copié dans le presse-papiers !`, 'success');
+            if (typeof gtag === 'function') {
+                gtag('event', 'copy_contact_info', {
+                    'event_category': 'engagement',
+                    'event_label': label
+                });
+            }
+        }).catch(() => showMessage('Erreur lors de la copie', 'error'));
+    }
+
+    function openLinkedIn() {
+        if (typeof gtag === 'function') {
+            gtag('event', 'select_content', {
+                'content_type': 'social_link',
+                'item_id': 'LinkedIn'
+            });
+        }
+        window.open('https://www.linkedin.com/in/abdoulaye-kourouma-32b1761a3', '_blank');
+    }
+
+    // Attacher les écouteurs d'événements
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+    if (copyEmailBtn) copyEmailBtn.addEventListener('click', () => copyToClipboard('abdulkourouma25@gmail.com', 'L\'adresse email'));
+
+    const copyPhoneBtn = document.getElementById('copyPhoneBtn');
+    if (copyPhoneBtn) copyPhoneBtn.addEventListener('click', () => copyToClipboard('+224 628 71 83 71', 'Le numéro de téléphone'));
+
+    const openMapsBtn = document.getElementById('openMapsBtn');
+    if (openMapsBtn) openMapsBtn.addEventListener('click', () => window.open('https://www.google.com/maps/place/Conakry,+Guinée', '_blank'));
+
+    const openLinkedInBtn = document.getElementById('openLinkedInBtn');
+    if (openLinkedInBtn) openLinkedInBtn.addEventListener('click', openLinkedIn);
 }
 
 window.pageInitializers = window.pageInitializers || {};

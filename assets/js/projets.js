@@ -30,17 +30,7 @@ function initProjetsPage() {
                 const categories = card.getAttribute('data-category');
                 const matchesFilter = (filter === 'all' || (categories && categories.includes(filter)));
 
-                if (matchesFilter) {
-                    card.style.display = 'block';
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                    // On écoute la fin de la transition pour cacher l'élément,
-                    // c'est plus robuste qu'un setTimeout.
-                    card.addEventListener('transitionend', () => {
-                        if (card.classList.contains('hidden')) card.style.display = 'none';
-                    }, { once: true }); // L'option { once: true } supprime l'écouteur après son exécution.
-                }
+                card.classList.toggle('hidden', !matchesFilter);
             });
         });
     });
@@ -58,30 +48,42 @@ function initProjetsPage() {
     projectCards.forEach(card => {
         observer.observe(card);
     });
+
+    // --- Logique des boutons d'action des projets ---    
+    function handleProjectAction(button, actionType) {
+        const { url, project } = button.dataset;
+        const eventType = actionType === 'view' ? 'project_live' : 'project_code';
+        const defaultMessage = actionType === 'view' 
+            ? `Ouverture du projet : ${project}\n(Fonctionnalité à implémenter)`
+            : `Affichage du code source : ${project}\n(Fonctionnalité à implémenter)`;
+
+        if (url) {
+            window.open(url, '_blank');
+        } else {
+            alert(defaultMessage);
+        }
+
+        if (typeof gtag === 'function') {
+            gtag('event', 'select_content', {
+                'content_type': eventType,
+                'item_id': project
+            });
+        }
+    }
+
+    // Attacher les écouteurs d'événements aux boutons
+    document.querySelectorAll('.view-site-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            handleProjectAction(e.currentTarget, 'view');
+        });
+    });
+
+    document.querySelectorAll('.view-code-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            handleProjectAction(e.currentTarget, 'code');
+        });
+    });
 }
 
 window.pageInitializers = window.pageInitializers || {};
 window.pageInitializers.projets = initProjetsPage;
-
-// --- Fonctions pour les actions des projets (exposées globalement) ---
-function viewProject(projectName) {
-    if (typeof gtag === 'function') {
-        gtag('event', 'select_content', {
-            'content_type': 'project_live',
-            'item_id': projectName
-        });
-    }
-    // TODO: Remplacer l'alerte par une action réelle, ex: window.open('URL_DU_PROJET', '_blank');
-    alert(`Ouverture du projet : ${projectName}\n(Fonctionnalité à implémenter)`);
-}
-
-function viewCode(projectName) {
-    if (typeof gtag === 'function') {
-        gtag('event', 'select_content', {
-            'content_type': 'project_code',
-            'item_id': projectName
-        });
-    }
-    // TODO: Remplacer l'alerte par une action réelle, ex: window.open('URL_GITHUB', '_blank');
-    alert(`Affichage du code source : ${projectName}\n(Fonctionnalité à implémenter)`);
-}

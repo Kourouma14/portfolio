@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="assets/css/contact.css">
 </head>
-<body>
+<body data-page="contact">
     <!-- L'élément qui recevra la barre de navigation -->
     <div id="navbar-placeholder"></div>
 
@@ -31,28 +31,28 @@
                         <div class="contact-icon">📧</div>
                         <h3>Email</h3>
                         <p>abdulkourouma25@gmail.com</p>
-                        <button class="contact-btn" onclick="copyToClipboard('abdulkourouma25@gmail.com', 'L\'adresse email')">Copier</button>
+                        <button class="contact-btn" id="copyEmailBtn">Copier</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">📱</div>
                         <h3>Téléphone</h3>
                         <p>+224 628 71 83 71<br>+224 666 48 14 18</p>
-                        <button class="contact-btn" onclick="copyToClipboard('+224 628 71 83 71', 'Le numéro de téléphone')">Copier</button>
+                        <button class="contact-btn" id="copyPhoneBtn">Copier</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">📍</div>
                         <h3>Localisation</h3>
                         <p>Dabompa / Matoto<br>Conakry, Guinée</p>
-                        <button class="contact-btn" onclick="openMaps()">Voir sur la carte</button>
+                        <button class="contact-btn" id="openMapsBtn">Voir sur la carte</button>
                     </div>
 
                     <div class="contact-card">
                         <div class="contact-icon">💼</div>
                         <h3>LinkedIn</h3>
                         <p>Abdoulaye Kourouma</p>
-                        <button class="contact-btn" onclick="openLinkedIn()">Visiter</button>
+                        <button class="contact-btn" id="openLinkedInBtn">Visiter</button>
                     </div>
                 </div>
             </section>
