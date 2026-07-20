@@ -18,10 +18,32 @@ async function loadComponent(component, targetId) {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {
             targetElement.innerHTML = text;
+            executeEmbeddedScripts(targetElement);
         }
     } catch (error) {
         console.error('Erreur lors du chargement du composant:', error);
     }
+}
+
+/**
+ * Exécute les scripts contenus dans un composant chargé dynamiquement.
+ * Les scripts inline sont recréés pour garantir leur exécution,
+ * et les scripts externes sont relancés correctement.
+ */
+function executeEmbeddedScripts(container) {
+    const scripts = Array.from(container.querySelectorAll('script'));
+    scripts.forEach(oldScript => {
+        const script = document.createElement('script');
+        Array.from(oldScript.attributes).forEach(attr => {
+            script.setAttribute(attr.name, attr.value);
+        });
+
+        if (oldScript.textContent) {
+            script.textContent = oldScript.textContent;
+        }
+
+        oldScript.parentNode.replaceChild(script, oldScript);
+    });
 }
 
 /**
