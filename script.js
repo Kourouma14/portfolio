@@ -5,15 +5,6 @@
 
 const defaultComponents = {
     'nav.html': `
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Y3WR9CCY7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-9Y3WR9CCY7');
-</script>
-
 <!-- Navigation -->
 <nav class="navbar">
     <div class="nav-container">
@@ -44,6 +35,38 @@ const defaultComponents = {
 `
 };
 
+function initGoogleAnalytics() {
+    if (window.gtag || document.querySelector('script[src*="googletagmanager.com/gtag/js?id=G-9Y3WR9CCY7"]')) {
+        return;
+    }
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function() {
+        window.dataLayer.push(arguments);
+    };
+
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-9Y3WR9CCY7';
+    document.head.appendChild(gaScript);
+
+    gtag('js', new Date());
+    gtag('config', 'G-9Y3WR9CCY7');
+}
+
+function isGoogleAnalyticsReady() {
+    return typeof window.gtag === 'function' && Array.isArray(window.dataLayer);
+}
+
+function verifyGoogleAnalytics() {
+    const ready = isGoogleAnalyticsReady();
+    console.info('Google Analytics ready:', ready);
+    if (!ready) {
+        console.warn('Google Analytics is not ready. Vérifie que le script gtag.js est bien chargé.');
+    }
+    return ready;
+}
+
 /**
  * Charge les composants HTML réutilisables (comme la nav et le footer) dans la page.
  * @param {string} component - Le nom du fichier du composant (ex: 'nav.html').
@@ -56,9 +79,10 @@ async function loadComponent(component, targetId) {
     }
 
     try {
-        const response = await fetch(component);
+        const componentUrl = new URL(component, window.location.href);
+        const response = await fetch(componentUrl);
         if (!response.ok) {
-            throw new Error(`Composant ${component} non trouvé.`);
+            throw new Error(`Composant ${component} non trouvé à ${componentUrl}.`);
         }
         const text = await response.text();
         targetElement.innerHTML = text;
@@ -508,6 +532,10 @@ function initLazyLoading() {
 
 // Initialisation complète une fois le DOM chargé
 function initPortfolio() {
+    // Google Analytics
+    initGoogleAnalytics();
+    verifyGoogleAnalytics();
+
     // Fonctionnalités de base
     initNavigation();
     initScrollEffects();
