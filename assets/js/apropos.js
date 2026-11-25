@@ -11,7 +11,7 @@ function initAproposPage() {
      * Gère le téléchargement du fichier CV.
      */
     function downloadCV() {
-        const cvFileName = 'CV ABDDOULAYE KOUROUMA -Fév 2026.pdf';
+        const cvFileName = 'CV ABDOULAYE KOUROUMA.pdf';
         const cvPath = `assets/cv/${cvFileName}`;
 
         // Envoi d'un événement à Google Analytics
