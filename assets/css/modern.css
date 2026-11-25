@@ -414,13 +414,35 @@ body::before {
     border: 1px solid rgba(230, 237, 243, 0.12);
     background: rgba(13, 17, 23, 0.82);
     color: #E6EDF3;
+    caret-color: #3FB950;
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
     border-color: #58A6FF;
+    background-color: #161B22;
+    color: #E6EDF3;
+    outline: 2px solid rgba(88, 166, 255, 0.24);
+    outline-offset: 1px;
     box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.10);
+}
+
+.form-group:focus-within label {
+    color: #58A6FF;
+}
+
+.form-group select,
+.form-group select option {
+    color-scheme: dark;
+    background-color: #161B22;
+    color: #E6EDF3;
+}
+
+.form-group input::selection,
+.form-group textarea::selection {
+    background: #58A6FF;
+    color: #0D1117;
 }
 
 .form-group label {
@@ -429,7 +451,49 @@ body::before {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: #77818D;
+    color: #9DA7B3;
+}
+
+.form-message {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 1.25rem;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+    transition: opacity 0.3s ease;
+}
+
+.form-message.error {
+    border-color: rgba(248, 81, 73, 0.32);
+    background: rgba(248, 81, 73, 0.10);
+    color: #FF7B72;
+}
+
+.form-message.success {
+    border-color: rgba(63, 185, 80, 0.30);
+    background: rgba(63, 185, 80, 0.10);
+    color: #56D364;
+}
+
+.form-message.fade-out {
+    opacity: 0;
+}
+
+.form-message-action {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: #79B8FF;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.form-message-action:hover {
+    color: #A5D1FF;
 }
 
 .footer {

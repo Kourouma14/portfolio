@@ -1,5 +1,5 @@
 // ==================== EMAILJS INIT ====================
-emailjs.init('rq8JLJjtRonZEX5zG');
+emailjs.init('THpDrWxiROizelGrF');
 
 // ==================== FORMULAIRE ====================
 const contactForm = document.getElementById('contactForm');
@@ -16,21 +16,27 @@ messageTextarea.addEventListener('input', function() {
 });
 
 // Affichage des messages
-function showMessage(text, type) {
+function showMessage(text, type, action) {
     const message = document.createElement('div');
-    // On ajoute une classe de base et une classe pour le type (success/error)
     message.className = `form-message ${type}`;
-    message.innerHTML = `
-        <span>${type === 'success' ? '✅' : '❌'}</span>
-        <span>${text}</span>
-    `;
+    const icon = document.createElement('span');
+    icon.textContent = type === 'success' ? '✅' : '❌';
+    const content = document.createElement('span');
+    content.textContent = text;
+    message.append(icon, content);
 
-    // Vider le conteneur et ajouter le nouveau message
+    if (action) {
+        const link = document.createElement('a');
+        link.className = 'form-message-action';
+        link.href = action.href;
+        link.textContent = action.label;
+        message.appendChild(link);
+    }
+
     messageContainer.innerHTML = '';
     messageContainer.appendChild(message);
     message.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    // Lancer l'animation de disparition après un délai
     setTimeout(() => {
         message.classList.add('fade-out');
         message.addEventListener('transitionend', () => message.remove());
@@ -125,7 +131,33 @@ contactForm.addEventListener('submit', async (e) => {
         }
         console.error('Status:', error.status);
         console.error('Text:', error.text);
-        showMessage('Erreur lors de l\'envoi. Veuillez réessayer ou me contacter directement par email.', 'error');
+
+        const status = Number(error.status);
+        const errorMessage = status === 401
+            ? 'La configuration EmailJS doit être vérifiée (clé publique invalide).'
+            : status === 403
+                ? 'EmailJS a refusé la demande. Vérifiez les domaines autorisés dans votre compte EmailJS.'
+                : status === 412
+                    ? 'La connexion Gmail d’EmailJS a expiré. Reconnectez votre compte Gmail dans les paramètres du service EmailJS.'
+                : status === 404
+                    ? 'Le service ou le modèle EmailJS est introuvable.'
+                    : status === 429
+                        ? 'La limite d’envoi est atteinte. Réessayez dans quelques instants.'
+                        : 'Le service d’envoi est temporairement inaccessible.';
+        const mailtoSubject = `Message portfolio : ${formData.sujet}`;
+        const mailtoBody = [
+            `Prénom : ${formData.prenom}`,
+            `Nom : ${formData.nom}`,
+            `Email : ${formData.email}`,
+            `Téléphone : ${formData.telephone}`,
+            '',
+            formData.message
+        ].join('\n');
+
+        showMessage(errorMessage, 'error', {
+            label: 'Continuer par email',
+            href: `mailto:abdulkourouma25@gmail.com?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`
+        });
     }
     finally {
         // Ce bloc s'exécute toujours, que l'envoi ait réussi ou échoué.
