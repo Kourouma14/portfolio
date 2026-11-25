@@ -9,6 +9,25 @@ function initProjetsPage() {
         return;
     }
 
+    // Afficher les projets principaux dans l'ordre souhaité.
+    const projectOrder = ['Nemeya', 'Trool', 'Dvelge Group', 'Dvelge Formation'];
+    const projectsGrid = document.querySelector('.projects-grid');
+
+    if (projectsGrid) {
+        const cards = Array.from(projectCards);
+        const orderedCards = projectOrder
+            .map(projectName => cards.find(projectCard => {
+                const title = projectCard.querySelector('h3');
+                return title && title.textContent.includes(projectName);
+            }))
+            .filter(Boolean);
+        const remainingCards = cards.filter(card => !orderedCards.includes(card));
+
+        [...orderedCards, ...remainingCards].forEach(card => {
+            projectsGrid.appendChild(card);
+        });
+    }
+
     // --- Système de filtrage des projets ---
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
